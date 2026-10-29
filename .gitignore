@@ -1,0 +1,31 @@
+# Environments & Virtual Environments
+.venv/
+venv/
+env/
+ENV/
+*.env
+
+# Python Bytecode & Cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.coverage
+htmlcov/
+
+# HuggingFace & Torch Cache
+.cache/
+hf_cache/
+
+# Data artifacts & local checkpoints
+*.parquet
+*.faiss
+*.index
+
+# Operating System
+.DS_Store
+Thumbs.db
+Desktop.ini
+.idea/
+.vscode/
