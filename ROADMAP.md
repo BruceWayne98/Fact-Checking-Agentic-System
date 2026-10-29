@@ -34,7 +34,7 @@ Before writing a single agent, you need a working local AI stack. This phase tea
 - [x] Download spaCy English model: `en_core_web_sm`
 - [x] Scaffold the project folder structure
 - [x] Write `config.py` — model name, paths, confidence thresholds
-- [ ] Install Ollama and pull model: `ollama pull llama3.2` (or start Ollama desktop service)
+- [x] Install Ollama and pull model: `ollama pull llama3.2` (or start Ollama desktop service)
 
 ### ✅ Checkpoint
 Run this sanity check — all core dependencies verified:
@@ -319,11 +319,11 @@ This phase teaches you:
 - This is a routing decision in LangGraph
 
 ### 🔨 Build
-- [ ] Write `agents/decomposer_agent.py`:
+- [x] Write `agents/decomposer_agent.py`:
   - `is_compound_claim(claim)` → bool (heuristic detector)
   - `decompose_claim(claim)` → `List[str]` of atomic sub-claims via LLM
-- [ ] Write `prompts/decomposer.txt`
-- [ ] Update `graph/extended_graph.py` — add conditional edge from Verifier → Decomposer
+- [x] Write `prompts/decomposer.txt`
+- [x] Update `graph/extended_graph.py` — add conditional edge from Verifier → Decomposer
 
 ### ✅ Checkpoint
 Input: `"Biden's infrastructure bill passed in 2021, creating 2 million jobs and reducing carbon emissions by 15%"`
@@ -355,11 +355,11 @@ This phase teaches you:
 - You'll use fan-out edges in LangGraph
 
 ### 🔨 Build
-- [ ] Write `agents/jury_agent.py`:
+- [x] Write `agents/jury_agent.py`:
   - Define 3 persona system prompts: `DATA_ANALYST`, `HISTORIAN`, `POLICY_ANALYST`
   - `run_jury(claim, evidence)` → `List[JuryVerdict]` (one per persona)
-- [ ] Write `prompts/jury_personas.txt` — three distinct system prompts
-- [ ] Add jury nodes to `graph/extended_graph.py` as parallel fan-out
+- [x] Write `prompts/jury_personas.txt` — three distinct system prompts
+- [x] Add jury nodes to `graph/extended_graph.py` as parallel fan-out
 
 ### ✅ Checkpoint
 Run the jury on a numerical claim and a historical claim. Each persona should produce a different verdict or at least a different confidence score — demonstrating that diverse lenses add value.
@@ -389,11 +389,11 @@ This phase teaches you:
 - This is a case where rule-based logic is strictly better than a neural approach
 
 ### 🔨 Build
-- [ ] Write `agents/logic_aggregator.py`:
+- [x] Write `agents/logic_aggregator.py`:
   - `aggregate_verdicts(atomic_verdicts, operator="AND"|"OR")` → final `VerificationResult`
   - `detect_logical_structure(compound_claim)` → infer the right operator from claim text
   - Include a logic trace in the result (which sub-claim caused the final verdict)
-- [ ] Wire into `graph/extended_graph.py` — receives jury output, produces aggregated verdict
+- [x] Wire into `graph/extended_graph.py` — receives jury output, produces aggregated verdict
 
 ### ✅ Checkpoint
 Input:
@@ -429,13 +429,13 @@ This final phase teaches you:
 - A complete evaluation includes both
 
 ### 🔨 Build
-- [ ] Finalize `graph/extended_graph.py` — full pipeline with conditional routing
-- [ ] Update `evaluation/run_eval.py` — evaluate extended pipeline on LIAR
-- [ ] Write `evaluation/ablation.py` — run pipeline with/without each extension component
-- [ ] Write a final `RESULTS.md` comparing:
+- [x] Finalize `graph/extended_graph.py` — full pipeline with conditional routing
+- [x] Update `evaluation/run_eval.py` — evaluate extended pipeline on LIAR
+- [x] Write `evaluation/ablation.py` — run pipeline with/without each extension component
+- [x] Write a final `RESULTS.md` comparing:
   - TRUST Baseline (yours) vs. TRUST Extended (yours)
   - vs. BERT / RoBERTa (paper reported numbers)
-- [ ] Manually review 20 generated reports for qualitative quality
+- [x] Manually review 20 generated reports for qualitative quality
 
 ### ✅ Checkpoint
 You have:

@@ -3,7 +3,7 @@ import faiss
 from typing import List, Dict, Any, Tuple
 from sentence_transformers import SentenceTransformer
 
-from config import EMBEDDING_MODEL_NAME
+from config import EMBEDDING_MODEL_NAME, CORPUS_DIR
 
 class FAISSSearcher:
     """
@@ -17,19 +17,30 @@ class FAISSSearcher:
         print(f"Loading embedding model: {model_name}...")
         self.model = SentenceTransformer(model_name)
 
-        # Extract texts and compute embeddings
-        texts = [doc["text"] for doc in documents]
-        print(f"Embedding {len(texts)} corpus documents into vector space...")
-        embeddings = self.model.encode(texts, convert_to_numpy=True, show_progress_bar=False)
-        
-        # Normalize embeddings to unit length for cosine similarity via inner product
-        faiss.normalize_L2(embeddings)
-        self.dimension = embeddings.shape[1]
+        cache_index_path = CORPUS_DIR / f"faiss_index_{len(documents)}.bin"
+        if cache_index_path.exists():
+            print(f"[OK] Loaded cached FAISS index from {cache_index_path.name} ({len(documents)} vectors).")
+            self.index = faiss.read_index(str(cache_index_path))
+            self.dimension = self.index.d
+        else:
+            # Extract texts and compute embeddings
+            texts = [doc["text"] for doc in documents]
+            print(f"Embedding {len(texts)} corpus documents into vector space...")
+            embeddings = self.model.encode(texts, convert_to_numpy=True, show_progress_bar=False)
+            
+            # Normalize embeddings to unit length for cosine similarity via inner product
+            faiss.normalize_L2(embeddings)
+            self.dimension = embeddings.shape[1]
 
-        # Build Flat Inner Product Index
-        self.index = faiss.IndexFlatIP(self.dimension)
-        self.index.add(embeddings.astype(np.float32))
-        print(f"[OK] FAISS Index built with {self.index.ntotal} vectors of dimension {self.dimension}.")
+            # Build Flat Inner Product Index
+            self.index = faiss.IndexFlatIP(self.dimension)
+            self.index.add(embeddings.astype(np.float32))
+            try:
+                CORPUS_DIR.mkdir(parents=True, exist_ok=True)
+                faiss.write_index(self.index, str(cache_index_path))
+                print(f"[OK] Cached FAISS Index built with {self.index.ntotal} vectors of dimension {self.dimension}.")
+            except Exception as e:
+                print(f"[OK] FAISS Index built with {self.index.ntotal} vectors of dimension {self.dimension}.")
 
     def search(self, query: str, top_k: int = 5) -> List[Tuple[Dict[str, Any], float]]:
         """

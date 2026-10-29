@@ -51,10 +51,20 @@ def check_environment():
     except Exception as e:
         errors.append(f"datasets/scikit-learn error: {e}")
 
-    # Check Ollama Python package
+    # Check Ollama Python package & Server connection
     try:
         import ollama
         print("[OK] ollama client library")
+        try:
+            models_res = ollama.list()
+            model_names = [m.get("name", m.get("model", "")) for m in models_res.get("models", [])]
+            has_llama = any("llama3.2" in m for m in model_names)
+            if has_llama:
+                print(f"[OK] Ollama server online (model 'llama3.2' available)")
+            else:
+                print(f"[NOTE] Ollama server reachable, models found: {model_names}")
+        except Exception as conn_err:
+            print(f"[NOTE] Ollama server offline / unreachable: {conn_err}")
     except Exception as e:
         errors.append(f"ollama python client error: {e}")
 

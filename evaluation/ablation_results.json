@@ -1,0 +1,62 @@
+[
+  {
+    "name": "Full TRUST Extended",
+    "description": "Decomposer + Delphi Jury (3 Personas) + Logic Aggregator",
+    "num_samples": 2,
+    "elapsed_seconds": 92.35,
+    "latency_per_stmt": 46.175,
+    "abstention_rate": 0.0,
+    "pessimistic_acc": 0.5,
+    "pessimistic_f1": 0.3333,
+    "optimistic_acc": 0.5,
+    "optimistic_f1": 0.3333
+  },
+  {
+    "name": "w/o Delphi Jury",
+    "description": "Decomposer + Single Verifier + Logic Aggregator",
+    "num_samples": 2,
+    "elapsed_seconds": 57.34,
+    "latency_per_stmt": 28.668,
+    "abstention_rate": 1.0,
+    "pessimistic_acc": 0.5,
+    "pessimistic_f1": 0.3333,
+    "optimistic_acc": 0.5,
+    "optimistic_f1": 0.3333
+  },
+  {
+    "name": "w/o Decomposer",
+    "description": "No Claim Decomposition + Delphi Jury + Verifier Consensus",
+    "num_samples": 2,
+    "elapsed_seconds": 85.68,
+    "latency_per_stmt": 42.842,
+    "abstention_rate": 0.0,
+    "pessimistic_acc": 0.5,
+    "pessimistic_f1": 0.3333,
+    "optimistic_acc": 0.5,
+    "optimistic_f1": 0.3333
+  },
+  {
+    "name": "w/o Logic Aggregator",
+    "description": "Decomposer + Delphi Jury + Raw Majority Verifier (No Propositional Logic)",
+    "num_samples": 2,
+    "elapsed_seconds": 77.29,
+    "latency_per_stmt": 38.646,
+    "abstention_rate": 0.0,
+    "pessimistic_acc": 0.5,
+    "pessimistic_f1": 0.3333,
+    "optimistic_acc": 0.5,
+    "optimistic_f1": 0.3333
+  },
+  {
+    "name": "TRUST Baseline (4 Agents)",
+    "description": "Extractor -> Hybrid Retrieval -> Single Verifier -> Explainer",
+    "num_samples": 2,
+    "elapsed_seconds": 62.21,
+    "latency_per_stmt": 31.106,
+    "abstention_rate": 1.0,
+    "pessimistic_acc": 0.5,
+    "pessimistic_f1": 0.3333,
+    "optimistic_acc": 0.5,
+    "optimistic_f1": 0.3333
+  }
+]

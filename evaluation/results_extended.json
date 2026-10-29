@@ -1,0 +1,359 @@
+{
+  "pipeline_mode": "extended",
+  "pipeline_label": "TRUST Extended (Decomposer + Jury + Logic)",
+  "dataset": "LIAR Test Subset",
+  "num_samples": 20,
+  "elapsed_seconds": 1058.54,
+  "abstention_rate": 0.0,
+  "pessimistic": {
+    "accuracy": 0.5,
+    "macro_f1": 0.2222,
+    "classification_report": {
+      "False": {
+        "precision": 0.5263157894736842,
+        "recall": 0.9090909090909091,
+        "f1-score": 0.6666666666666666,
+        "support": 11.0
+      },
+      "True": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 6.0
+      },
+      "Uncertain": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 3.0
+      },
+      "accuracy": 0.5,
+      "macro avg": {
+        "precision": 0.17543859649122806,
+        "recall": 0.30303030303030304,
+        "f1-score": 0.2222222222222222,
+        "support": 20.0
+      },
+      "weighted avg": {
+        "precision": 0.28947368421052627,
+        "recall": 0.5,
+        "f1-score": 0.36666666666666664,
+        "support": 20.0
+      }
+    }
+  },
+  "optimistic": {
+    "accuracy": 0.5,
+    "macro_f1": 0.2222,
+    "classification_report": {
+      "False": {
+        "precision": 0.5263157894736842,
+        "recall": 0.9090909090909091,
+        "f1-score": 0.6666666666666666,
+        "support": 11.0
+      },
+      "True": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 6.0
+      },
+      "Uncertain": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 3.0
+      },
+      "accuracy": 0.5,
+      "macro avg": {
+        "precision": 0.17543859649122806,
+        "recall": 0.30303030303030304,
+        "f1-score": 0.2222222222222222,
+        "support": 20.0
+      },
+      "weighted avg": {
+        "precision": 0.28947368421052627,
+        "recall": 0.5,
+        "f1-score": 0.36666666666666664,
+        "support": 20.0
+      }
+    }
+  },
+  "records": [
+    {
+      "id": "11972.json",
+      "statement": "Building a wall on the U.S.-Mexico border will take literally years.",
+      "speaker": "rick-perry",
+      "label_6": "true",
+      "label_3": "True",
+      "predicted_verdict": "False",
+      "avg_confidence": 0.77,
+      "claims_extracted": [
+        "The construction of a wall on the U.S.-Mexico border will take years.",
+        "The construction of a wall on the U.S.-Mexico border will take at least years."
+      ]
+    },
+    {
+      "id": "11685.json",
+      "statement": "Wisconsin is on pace to double the number of layoffs this year.",
+      "speaker": "katrina-shankland",
+      "label_6": "false",
+      "label_3": "False",
+      "predicted_verdict": "False",
+      "avg_confidence": 0.62,
+      "claims_extracted": [
+        "Wisconsin is on pace to double the number of layoffs this year.",
+        "The number of layoffs in Wisconsin this year will be double the number of layoffs in the previous year."
+      ]
+    },
+    {
+      "id": "11096.json",
+      "statement": "Says John McCain has done nothing to help the vets.",
+      "speaker": "donald-trump",
+      "label_6": "false",
+      "label_3": "False",
+      "predicted_verdict": "True",
+      "avg_confidence": 0.72,
+      "claims_extracted": [
+        "John McCain did nothing to help the vets.",
+        "John McCain has done nothing to help the vets."
+      ]
+    },
+    {
+      "id": "5209.json",
+      "statement": "Suzanne Bonamici supports a plan that will cut choice for Medicare Advantage seniors.",
+      "speaker": "rob-cornilles",
+      "label_6": "half-true",
+      "label_3": "Uncertain",
+      "predicted_verdict": "False",
+      "avg_confidence": 0.73,
+      "claims_extracted": [
+        "Suzanne Bonamici supports a plan that will cut choice for Medicare Advantage seniors.",
+        "A plan will cut choice for Medicare Advantage seniors."
+      ]
+    },
+    {
+      "id": "9524.json",
+      "statement": "When asked by a reporter whether hes at the center of a criminal scheme to violate campaign laws, Gov. Scott Walker nodded yes.",
+      "speaker": "state-democratic-party-wisconsin",
+      "label_6": "pants-fire",
+      "label_3": "False",
+      "predicted_verdict": "False",
+      "avg_confidence": 0.79,
+      "claims_extracted": [
+        "Gov. Scott Walker is at the center of a criminal scheme to violate campaign laws.",
+        "Gov. Scott Walker nodded yes."
+      ]
+    },
+    {
+      "id": "5962.json",
+      "statement": "Over the past five years the federal government has paid out $601 million in retirement and disability benefits to deceased former federal employees.",
+      "speaker": "brendan-doherty",
+      "label_6": "true",
+      "label_3": "True",
+      "predicted_verdict": "False",
+      "avg_confidence": 0.66,
+      "claims_extracted": [
+        "The federal government paid $601 million in retirement and disability benefits over the past five years.",
+        "The federal government paid $601 million in retirement and disability benefits to deceased former federal employees."
+      ]
+    },
+    {
+      "id": "7070.json",
+      "statement": "Says that Tennessee law requires that schools receive half of proceeds -- $31 million per year -- from a half-cent increase in the Shelby County sales tax.",
+      "speaker": "stand-children-tennessee",
+      "label_6": "true",
+      "label_3": "True",
+      "predicted_verdict": "False",
+      "avg_confidence": 0.8167,
+      "claims_extracted": [
+        "Tennessee law requires that schools receive half of proceeds from a half-cent increase in the Shelby County sales tax.",
+        "Tennessee law requires that schools receive half of proceeds.",
+        "A half-cent increase in the Shelby County sales tax occurred.",
+        "The Shelby County sales tax proceeds were divided equally between schools and other recipients.",
+        "Schools in Shelby County receive $31 million per year from a half-cent increase in the sales tax."
+      ]
+    },
+    {
+      "id": "1046.json",
+      "statement": "Says Vice President Joe Biden \"admits that the American people are being scammed\" with the economic stimulus package.",
+      "speaker": "john-boehner",
+      "label_6": "barely-true",
+      "label_3": "False",
+      "predicted_verdict": "False",
+      "avg_confidence": 0.8,
+      "claims_extracted": [
+        "Joe Biden admits that the American people are being scammed with the economic stimulus package.",
+        "Joe Biden admits that the American people are being scammed with the economic stimulus package.",
+        "The American people are being scammed with the economic stimulus package."
+      ]
+    },
+    {
+      "id": "12849.json",
+      "statement": "Donald Trump is against marriage equality. He wants to go back.",
+      "speaker": "sean-patrick-maloney",
+      "label_6": "true",
+      "label_3": "True",
+      "predicted_verdict": "False",
+      "avg_confidence": 0.82,
+      "claims_extracted": [
+        "Donald Trump is against marriage equality.",
+        "Donald Trump wants to go back."
+      ]
+    },
+    {
+      "id": "13270.json",
+      "statement": "We know that more than half of Hillary Clintons meetings while she was secretary of state were given to major contributors to the Clinton Foundation.",
+      "speaker": "mike-pence",
+      "label_6": "barely-true",
+      "label_3": "False",
+      "predicted_verdict": "False",
+      "avg_confidence": 0.85,
+      "claims_extracted": [
+        "Hillary Clinton had more than half of her meetings while Secretary of State that were with major contributors to the Clinton Foundation.",
+        "Hillary Clinton was the Secretary of State.",
+        "Hillary Clinton was Secretary of State.",
+        "Hillary Clinton had more than half of her meetings as Secretary of State.",
+        "A meeting with a major contributor to the Clinton Foundation occurred during Hillary Clinton's tenure as Secretary of State.",
+        "The Clinton Foundation received contributions from major donors during Hillary Clinton's tenure as Secretary of State."
+      ]
+    },
+    {
+      "id": "6649.json",
+      "statement": "We know there are more Democrats in Georgia than Republicans. We know that for a fact.",
+      "speaker": "mike-berlon",
+      "label_6": "barely-true",
+      "label_3": "False",
+      "predicted_verdict": "False",
+      "avg_confidence": 0.85,
+      "claims_extracted": [
+        "The number of Democrats in Georgia is greater than the number of Republicans in Georgia.",
+        "The number of Democrats in Georgia is known to be greater than the number of Republicans in Georgia."
+      ]
+    },
+    {
+      "id": "2508.json",
+      "statement": "PolitiFact Texas says Congressman Edwards attacks on Bill Flores are false.",
+      "speaker": "bill-flores",
+      "label_6": "barely-true",
+      "label_3": "False",
+      "predicted_verdict": "False",
+      "avg_confidence": 0.85,
+      "claims_extracted": [
+        "PolitiFact Texas says Congressman Edwards attacks on Bill Flores are false.",
+        "Congressman Edwards attacks on Bill Flores are false.",
+        "PolitiFact Texas says Congressman Edwards made false attacks on Bill Flores.",
+        "Congressman Edwards made false attacks on Bill Flores."
+      ]
+    },
+    {
+      "id": "11269.json",
+      "statement": "Denali is the Kenyan word for black power.",
+      "speaker": "viral-image",
+      "label_6": "pants-fire",
+      "label_3": "False",
+      "predicted_verdict": "False",
+      "avg_confidence": 0.86,
+      "claims_extracted": [
+        "Denali is a word in the Kenyan language.",
+        "Denali is the word for black power in Kenyan."
+      ]
+    },
+    {
+      "id": "11200.json",
+      "statement": "Says 57 percent of federal spending goes to the military and just 1 percent goes to food and agriculture, including food stamps.",
+      "speaker": "facebook-posts",
+      "label_6": "false",
+      "label_3": "False",
+      "predicted_verdict": "False",
+      "avg_confidence": 0.6167,
+      "claims_extracted": [
+        "1 percent of federal spending goes to food and agriculture, including food stamps.",
+        "57 percent of federal spending goes to the military.",
+        "1 percent of federal spending goes to food and agriculture.",
+        "1 percent of federal spending goes to food stamps."
+      ]
+    },
+    {
+      "id": "8047.json",
+      "statement": "On residency requirements for public workers",
+      "speaker": "chris-abele",
+      "label_6": "half-true",
+      "label_3": "Uncertain",
+      "predicted_verdict": "False",
+      "avg_confidence": 0.62,
+      "claims_extracted": [
+        "There are residency requirements for public workers.",
+        "Public workers are required to meet residency requirements."
+      ]
+    },
+    {
+      "id": "4888.json",
+      "statement": "Says the unemployment rate for college graduates is 4.4 percent and over 10 percent for noncollege-educated.",
+      "speaker": "rick-santorum",
+      "label_6": "true",
+      "label_3": "True",
+      "predicted_verdict": "False",
+      "avg_confidence": 0.88,
+      "claims_extracted": [
+        "The unemployment rate for college graduates is 4.4 percent.",
+        "The unemployment rate for noncollege-educated is over 10 percent."
+      ]
+    },
+    {
+      "id": "3331.json",
+      "statement": "Unfortunately we have documented instances where people defecated in the (Statehouse) building.",
+      "speaker": "tom-niehaus",
+      "label_6": "pants-fire",
+      "label_3": "False",
+      "predicted_verdict": "False",
+      "avg_confidence": 0.9,
+      "claims_extracted": [
+        "There have been documented instances of people defecating in the Statehouse building.",
+        "The Statehouse building has been the site of documented defecation incidents."
+      ]
+    },
+    {
+      "id": "9198.json",
+      "statement": "A recent Gallup poll found that 72 percent of Americans and 56 percent of Democrats say the biggest threat to our nations security is big government.",
+      "speaker": "marsha-blackburn",
+      "label_6": "half-true",
+      "label_3": "Uncertain",
+      "predicted_verdict": "False",
+      "avg_confidence": 0.6333,
+      "claims_extracted": [
+        "72 percent of Americans and 56 percent of Democrats say big government is the biggest threat to our nation's security.",
+        "A recent Gallup poll was conducted.",
+        "72 percent of Americans say big government is the biggest threat to our nation's security.",
+        "56 percent of Democrats say big government is the biggest threat to our nation's security.",
+        "Big government is the biggest threat to our nation's security."
+      ]
+    },
+    {
+      "id": "73.json",
+      "statement": "\"Each year, 18,000 people die in America because they don't have health care.\"",
+      "speaker": "hillary-clinton",
+      "label_6": "true",
+      "label_3": "True",
+      "predicted_verdict": "False",
+      "avg_confidence": 0.62,
+      "claims_extracted": [
+        "18,000 people die in America each year.",
+        "In America, 18,000 people die each year."
+      ]
+    },
+    {
+      "id": "1328.json",
+      "statement": "\"Ronald Reagan faced an even worse recession\" than the current one.",
+      "speaker": "sarah-palin",
+      "label_6": "false",
+      "label_3": "False",
+      "predicted_verdict": "False",
+      "avg_confidence": 0.81,
+      "claims_extracted": [
+        "Ronald Reagan faced an even worse recession.",
+        "Ronald Reagan faced a recession that was worse than the current one."
+      ]
+    }
+  ]
+}

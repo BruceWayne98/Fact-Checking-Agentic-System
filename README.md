@@ -165,25 +165,40 @@ All core dependencies verified successfully!
 ## 🏃 Running the System
 
 ### 1. Run Verification Pipeline on Custom Text
-Execute the end-to-end multi-agent pipeline on any input statement:
+Execute the baseline 4-agent pipeline:
 ```bash
 python main.py
 ```
 
+Execute the full extended neurosymbolic pipeline (Decomposer + Delphi Jury + Logic Aggregator):
+```bash
+python graph/extended_graph.py
+```
+
 ### 2. Build / Update the Knowledge Corpus
-Re-index the hybrid BM25 and FAISS reference corpus:
+Re-index and cache the hybrid BM25 and FAISS reference corpus:
 ```bash
 python data/build_corpus.py
 ```
 
 ### 3. Run Benchmark Evaluation (LIAR Dataset)
-Run the automated evaluation harness across LIAR test statements:
+Run automated evaluation on LIAR test statements:
 ```bash
-python evaluation/run_eval.py
+# Evaluate full extended pipeline
+python evaluation/run_eval.py --mode extended --limit 50
+
+# Evaluate baseline pipeline
+python evaluation/run_eval.py --mode baseline --limit 50
 ```
 
-### 4. View Evaluation Summary Report
-Display the benchmark comparison table and abstention statistics:
+### 4. Run Component Ablation Study
+Measure the empirical contribution of Decomposer, Delphi Jury, and Logic Aggregator:
+```bash
+python evaluation/ablation.py --limit 20
+```
+
+### 5. View Evaluation Summary Report
+Display comparative performance and ablation breakdown:
 ```bash
 python evaluation/report.py
 ```
@@ -199,38 +214,48 @@ Fact Checking Agentic System/
 │   ├── claim_extractor.py       # Agent 1: spaCy NER + Dep. Parsing + LLM
 │   ├── retrieval_agent.py       # Agent 2: Multi-modal hybrid retrieval interface
 │   ├── verifier_agent.py        # Agent 3: Grounded evidence cross-examination
-│   └── explainer_agent.py       # Agent 4: Human-auditable markdown report generator
+│   ├── explainer_agent.py       # Agent 4: Human-auditable markdown report generator
+│   ├── decomposer_agent.py      # Research Extension: LoCal atomic claim decomposition
+│   ├── jury_agent.py            # Research Extension: Delphi Multi-Agent Jury (3 Personas)
+│   └── logic_aggregator.py      # Research Extension: Formal propositional logic gates
 │
 ├── graph/
-│   ├── state.py                 # TrustAgentState TypedDict & dataclasses
-│   └── baseline_graph.py        # 4-Agent LangGraph workflow definition
+│   ├── state.py                 # TrustAgentState TypedDict, VerificationResult, JuryVerdict
+│   ├── baseline_graph.py        # 4-Agent linear LangGraph workflow definition
+│   └── extended_graph.py        # Full Extended LangGraph with fan-out Delphi Jury & logic
 │
 ├── retrieval/
 │   ├── bm25_index.py            # Okapi BM25 sparse lexical retriever
-│   ├── faiss_index.py           # FAISS dense vector retriever (SBERT)
+│   ├── faiss_index.py           # FAISS dense vector retriever (SBERT with disk caching)
 │   └── hybrid_retriever.py      # Weighted score fusion (BM25 + FAISS)
 │
 ├── data/
 │   ├── build_corpus.py          # Knowledge corpus compiler
 │   ├── load_liar.py             # LIAR dataset downloader & inspector
 │   ├── liar/                    # Cached benchmark samples (sample.jsonl)
-│   └── corpus/                  # Reference documents & passages (corpus.jsonl)
+│   └── corpus/                  # Reference documents & passages (corpus.jsonl, faiss_index_600.bin)
 │
 ├── evaluation/
 │   ├── metrics.py               # Accuracy, Macro-F1 & Abstention mapping
-│   ├── run_eval.py              # Automated test harness
-│   ├── report.py                # Formatted performance reporting table
-│   └── results.json             # Granular benchmark evaluation run results
+│   ├── run_eval.py              # Automated test harness for baseline & extended pipelines
+│   ├── ablation.py              # Systematic component ablation runner
+│   ├── report.py                # Comparative benchmark reporting table
+│   ├── results_baseline.json    # Baseline evaluation run metrics
+│   ├── results_extended.json    # Extended evaluation run metrics
+│   └── ablation_results.json    # Component ablation run metrics
 │
 ├── prompts/
 │   ├── claim_extractor.txt      # System prompt for claim isolation
 │   ├── verifier.txt             # System prompt for grounded verification
-│   └── explainer.txt            # System prompt for report generation
+│   ├── explainer.txt            # System prompt for report generation
+│   ├── decomposer.txt           # System prompt for atomic decomposition
+│   └── jury_personas.txt        # Specialized system prompts for Delphi Jury personas
 │
 ├── main.py                      # Interactive execution entrypoint
 ├── config.py                    # Global paths, weights, and model configurations
 ├── test_setup.py                # Environment verification script
-├── ROADMAP.md                   # 12-Phase implementation guide & checklist
+├── RESULTS.md                   # Full empirical evaluation report & ablation analysis
+├── ROADMAP.md                   # 12-Phase implementation guide & checklist (Phases 0-11 Complete)
 ├── requirements.txt             # Project dependencies
 ├── .gitignore                   # Git exclusions
 └── README.md                    # Project documentation
