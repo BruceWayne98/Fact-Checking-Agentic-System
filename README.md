@@ -21,25 +21,28 @@ Automated fake news detection has traditionally relied on monolithic, fine-tuned
 
 ```mermaid
 flowchart TD
-    A["📰 Raw News Article / Statement"] --> B
+    A["Raw News Article / Statement"] --> B
 
-    subgraph BASELINE ["🔵 Baseline Pipeline (4 Agents)"]
-        B["Agent 1: Claim Extractor<br/>spaCy NER + Dependency Parsing + LLM"]
-        B --> C["Agent 2: Hybrid Retrieval Agent<br/>BM25 (Sparse) + FAISS SBERT (Dense)"]
-        C --> D["Agent 3: Verifier Agent<br/>Grounded Reasoning + Calibrated Confidence"]
-        D --> E["Agent 4: Explainer Agent<br/>Human-Auditable Markdown Report + Citations"]
+    subgraph Baseline["Baseline Pipeline (4 Agents)"]
+        B["Agent 1: Claim Extractor - spaCy NER + Dependency Parsing + LLM"]
+        B --> C["Agent 2: Hybrid Retrieval Agent - BM25 Sparse + FAISS SBERT Dense"]
+        C --> D["Agent 3: Verifier Agent - Grounded Reasoning + Calibrated Confidence"]
+        D --> E["Agent 4: Explainer Agent - Human-Auditable Markdown Report + Citations"]
     end
 
-    E --> F{{"Compound / Complex Claim?"}}
+    E --> F{"Compound or Complex Claim?"}
 
-    subgraph EXTENSION ["🟣 Research Extension (Compound Claims)"]
-        F -- Yes --> G["Decomposer Agent<br/>LoCal-Style Atomic Decomposition"]
-        G --> H["Delphi Multi-Agent Jury<br/>Data Analyst, Historian, Policy Personas"]
-        H --> I["Logic Aggregator<br/>Formal Symbolic Logic (∧, ∨, ¬, →)"]
+    subgraph Extension["Research Extension (Compound Claims)"]
+        G["Decomposer Agent - LoCal-Style Atomic Decomposition"]
+        H["Delphi Multi-Agent Jury - Data Analyst, Historian, Policy Personas"]
+        I["Logic Aggregator - Formal Symbolic Logic"]
+        G --> H
+        H --> I
     end
 
-    F -- No --> J
-    I --> J["📋 Final Verification Report<br/>Verdict + Confidence + Citations + Logic Trace"]
+    F -->|Yes| G
+    F -->|No| J["Final Verification Report - Verdict + Confidence + Citations + Logic Trace"]
+    I --> J
 ```
 
 ---
@@ -48,18 +51,20 @@ flowchart TD
 
 ### 1. Agent 1: Claim Extractor (`agents/claim_extractor.py`)
 - **Named Entity Recognition (NER):** Uses spaCy (`en_core_web_sm`) to isolate anchor entities (`PERSON`, `ORG`, `GPE`, `DATE`, `PERCENT`, `MONEY`).
-- **Dependency Parsing:** Extracts Subject-Verb-Object (SVO) factual propositions by traversing grammatical syntax trees (`nsubj` $\rightarrow$ `ROOT` $\rightarrow$ `dobj`/`pobj`/`attr`).
+- **Dependency Parsing:** Extracts Subject-Verb-Object (SVO) factual propositions by traversing grammatical syntax trees (`nsubj` -> `ROOT` -> `dobj`/`pobj`/`attr`).
 - **LLM Boundary Refinement:** Formulates discrete, self-contained verifiable assertions, stripping rhetorical hyperbole and resolving pronouns.
 
 ### 2. Agent 2: Hybrid Retrieval Agent (`retrieval/hybrid_retriever.py`, `agents/retrieval_agent.py`)
 - **Sparse Lexical Search (BM25):** Term-frequency & inverse-document-frequency ranking for exact entity, year, and statistic matches.
 - **Dense Semantic Search (FAISS):** Encodes text into 384-dimensional dense vectors using `sentence-transformers` (`all-MiniLM-L6-v2`) and searches via `faiss.IndexFlatIP` on unit-normalized vectors.
 - **Weighted Fusion:** Blends scores using min-max normalization:
-  $$\text{Score}_{\text{hybrid}} = 0.4 \cdot \text{BM25}_{\text{norm}} + 0.6 \cdot \text{FAISS}_{\text{norm}}$$
+  ```text
+  Score_hybrid = (0.4 * BM25_norm) + (0.6 * FAISS_norm)
+  ```
 
 ### 3. Agent 3: Verifier Agent (`agents/verifier_agent.py`)
 - **Grounded Verification:** Compares the claim strictly against retrieved passages, prohibiting ungrounded parametric model assumptions.
-- **Calibrated Confidence & Abstention:** Enforces an uncertainty threshold (default: $0.50$). If evidence is insufficient, contradictory, or confidence is $< 0.50$, the system outputs `Uncertain` rather than guessing.
+- **Calibrated Confidence & Abstention:** Enforces an uncertainty threshold (default: `0.50`). If evidence is insufficient, contradictory, or confidence is `< 0.50`, the system outputs `Uncertain` rather than guessing.
 
 ### 4. Agent 4: Explainer Agent (`agents/explainer_agent.py`)
 - Produces a comprehensive, publication-ready audit report in GitHub-flavored Markdown featuring:
@@ -78,11 +83,11 @@ Evaluated against 50 statements from the **LIAR** political fact-checking benchm
 
 | Framework / Configuration | Accuracy | Macro-F1 | Abstention Rate | Explainable & Cited? |
 |:---|:---:|:---:|:---:|:---:|
-| **TRUST Baseline (Pessimistic: Uncertain $\rightarrow$ False)** | **46.0%** | **0.2100** | **86.0%** | **Yes (Full Audit & Sources)** |
-| **TRUST Baseline (Optimistic: Uncertain $\rightarrow$ True)** | **46.0%** | **0.3222** | **86.0%** | **Yes (Full Audit & Sources)** |
-| *Fine-Tuned BERT (Paper Reported)* | ~27–30% | ~0.25–0.28 | 0% | No (Black-box classification) |
-| *Fine-Tuned RoBERTa (Paper Reported)* | ~30–33% | ~0.28–0.31 | 0% | No (Black-box classification) |
-| *Zero-Shot LLM (Paper Reported)* | ~22–26% | ~0.20–0.24 | 0% | No (Hallucination risk) |
+| **TRUST Baseline (Pessimistic: Uncertain -> False)** | **46.0%** | **0.2100** | **86.0%** | **Yes (Full Audit & Sources)** |
+| **TRUST Baseline (Optimistic: Uncertain -> True)** | **46.0%** | **0.3222** | **86.0%** | **Yes (Full Audit & Sources)** |
+| *Fine-Tuned BERT (Paper Reported)* | ~27-30% | ~0.25-0.28 | 0% | No (Black-box classification) |
+| *Fine-Tuned RoBERTa (Paper Reported)* | ~30-33% | ~0.28-0.31 | 0% | No (Black-box classification) |
+| *Zero-Shot LLM (Paper Reported)* | ~22-26% | ~0.20-0.24 | 0% | No (Hallucination risk) |
 
 ### Key Diagnostic Findings:
 1. **The Retrieval Bottleneck:** As demonstrated in the paper, retrieval quality is the dominant performance bottleneck. When external corpus coverage is sparse, TRUST Agents safely triggers its abstention protocol (**86% abstention rate**), preventing false confidence.
